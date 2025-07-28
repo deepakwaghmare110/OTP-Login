@@ -24,10 +24,25 @@ const OtpLogin = ({ length = 4, onOtpSubmit = () => {} }) => {
 
     const combinedOtp = newOtp.join("");
     if (combinedOtp.length === length) onOtpSubmit(combinedOtp);
+
+    // move to next input if value is provided to current index
+
+    if (value && index < length - 1 && inputRefs.current[index + 1]) {
+      inputRefs.current[index + 1].focus();
+    }
   };
 
   const handleClick = () => {};
-  const handleKeyDown = () => {};
+  const handleKeyDown = (index, e) => {
+    if (
+      e.key === "Backspace" &&
+      index > 0 &&
+      !otp[index] &&
+      inputRefs.current[index - 1]
+    ) {
+      inputRefs.current[index - 1].focus();
+    }
+  };
   return (
     <div>
       {otp.map((value, index) => {
